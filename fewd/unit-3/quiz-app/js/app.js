@@ -12,31 +12,49 @@
 
 var quizApp = {
 
-  questions: [
+  question: [
     'What does CSS stand for?',
     'What does HTML stand for?',
-    'What does CSS stand for?',
-    'What does CSS stand for?'
+    'Who is making the Web standards?',
+    'Choose the correct HTML tag for the largest heading',
+    'What is the correct HTML tag for inserting a line break?'
   ],
 
   questionAnswers: [
     'Cascading Style Sheets',
     'Hypertext Markup Language',
-    'Cascading Style Sheets',
-    'Cascading Style Sheets'
-  ],
-
-  scoreCalculator: function() {
-    return 'Hello world';
-  }
+    'The World Wide Web Consortium',
+    '<h1>',
+    '<br>'
+  ]
 
 };
 
-console.log(quizApp.questions[0]);
-console.log(quizApp.scoreCalculator());
+var score;
+var checkAnswer = function ( selector, answerNumber ) {
+  var elementValue = $(selector).val();
+  if ( elementValue ==  quizApp.questionAnswers[answerNumber] ) {
+    score += 1;
+  }
+}
 
+var displayQuestionTitle = function( num ) {
+  return quizApp.question[num];
+}
 
-// $(document).ready(function(){
+var scoreCalculator = function () {
+  return score * 20;
+}
 
+console.log( checkAnswer() )
 
-// });
+$(document).ready(function(){
+
+  // Update Titles
+  $('.js-question1').find('.question-title').text( displayQuestionTitle(0) );
+  $('.js-question2').find('.question-title').text( displayQuestionTitle(1) );
+  $('.js-question3').find('.question-title').text( displayQuestionTitle(2) );
+  $('.js-question4').find('.question-title').text( displayQuestionTitle(3) );
+  $('.js-question5').find('.question-title').text( displayQuestionTitle(4) );
+
+});

@@ -270,3 +270,8 @@ label > input {
 	transition: background .5s ease-in-out;
 	cursor: pointer;
 }
+
+
+.hide {
+	display: none;
+}
