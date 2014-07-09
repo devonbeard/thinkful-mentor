@@ -6,23 +6,26 @@ function newGame() {
   secretNumber = Math.floor(Math.random() * 100);
 }
 
-// function checkNumber( num ) {
-//   if ( guessedNumber > 100) {
-//     $(feedbackContainer).text('Pick a number less than 100');
-//   } else if ( guessedNumber < 0 ) {
-//     $(feedbackContainer).text('Pick a number less than 100');
-//   }
-// }
-
 function userGuessFeedback( num ) {
   var feedbackContainer = $('#feedback');
-
   if ( num == secretNumber ) {
-    $(feedbackContainer).text('Correct!');
-  } else if ( num < secretNumber ) {
-    $(feedbackContainer).text('You guess was too low');
-  } else if ( num > secretNumber ) {
-    $(feedbackContainer).text('You guess was too high');
+    var endGame = confirm( "You have won the game!" );
+    if ( endGame == true ) {
+      newGame();
+      $(feedbackContainer).text('Make your Guess!');
+    }
+  } else if ( num < secretNumber && (secretNumber - num) <= 5 ) {
+    $(feedbackContainer).text('You are hot!');
+  } else if ( num < secretNumber && (secretNumber - num) <= 15 ) {
+      $(feedbackContainer).text("You're low, but warming up!");
+  } else if ( num < secretNumber && (secretNumber - num) > 15 ) {
+      $(feedbackContainer).text('You guess was too low');
+  } else if ( num > secretNumber && (num - secretNumber) <= 5 ) {
+    $(feedbackContainer).text('You are hot!');
+  } else if ( num > secretNumber && (num - secretNumber) <= 15 ) {
+      $(feedbackContainer).text("You're high, but warming up!");
+  } else if ( num > secretNumber && (num - secretNumber) > 15 ) {
+      $(feedbackContainer).text('You guess was too high');
   }
 }
 
@@ -31,7 +34,11 @@ function guess() {
   var guessedNumber = $('#userGuess').val();
 
   // userGuessFeedback
-  userGuessFeedback( guessedNumber );
+  if ( guessedNumber <= 100 ) {
+    userGuessFeedback( guessedNumber );
+  } else {
+    alert("Enter a number less than 100");
+  }
 
   // Append guess to guesslist
   $('#guessList').append("<li>" + guessedNumber + "</li>");
@@ -51,12 +58,10 @@ $(document).ready(function(){
   newGame();
   console.log( secretNumber );
 
-
   /*--- Start New Game on click ---*/
   $(".new").click( function(e) {
     newGame();
-    console.log( "New game started, the secret number is : " + secretNumber );
-    e.preventDefault();
+    return false;
   });
 
 
