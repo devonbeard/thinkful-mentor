@@ -6,14 +6,18 @@ function newGame() {
   secretNumber = Math.floor(Math.random() * 100);
 }
 
+function gameOver() {
+  var endGame = confirm( "You have won the game!" );
+  if ( endGame == true ) {
+    newGame();
+    $(feedbackContainer).text('Make your Guess!');
+  }
+}
+
 function userGuessFeedback( num ) {
   var feedbackContainer = $('#feedback');
   if ( num == secretNumber ) {
-    var endGame = confirm( "You have won the game!" );
-    if ( endGame == true ) {
-      newGame();
-      $(feedbackContainer).text('Make your Guess!');
-    }
+    gameOver();
   } else if ( num < secretNumber && (secretNumber - num) <= 5 ) {
     $(feedbackContainer).text('You are hot!');
   } else if ( num < secretNumber && (secretNumber - num) <= 15 ) {
@@ -55,6 +59,7 @@ function guess() {
 
 $(document).ready(function(){
 
+  /*--- Start New Game on Document Ready ---*/
   newGame();
   console.log( secretNumber );
 
