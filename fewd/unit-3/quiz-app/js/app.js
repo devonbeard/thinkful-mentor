@@ -10,6 +10,8 @@
 // 2) Let the user know their score so far
 // 3) Let the user know if their previous response was correct
 
+var score = 5;
+
 var quizApp = {
 
   question: [
@@ -26,35 +28,44 @@ var quizApp = {
     'The World Wide Web Consortium',
     '<h1>',
     '<br>'
-  ]
+  ],
+
+  checkAnswer: function ( selector, answerNumber ) {
+    var elementValue = $(selector).val();
+    if ( elementValue ==  quizApp.questionAnswers[answerNumber] ) {
+      score += 1;
+    }
+  },
+
+  displayQuestionTitle: function( num ) {
+    return quizApp.question[num];
+  },
+
+  scoreCalculator: function () {
+    return score * 20;
+  }
 
 };
 
-var score;
-var checkAnswer = function ( selector, answerNumber ) {
-  var elementValue = $(selector).val();
-  if ( elementValue ==  quizApp.questionAnswers[answerNumber] ) {
-    score += 1;
-  }
-}
 
-var displayQuestionTitle = function( num ) {
-  return quizApp.question[num];
-}
-
-var scoreCalculator = function () {
-  return score * 20;
-}
-
-console.log( checkAnswer() )
 
 $(document).ready(function(){
 
-  // Update Titles
-  $('.js-question1').find('.question-title').text( displayQuestionTitle(0) );
-  $('.js-question2').find('.question-title').text( displayQuestionTitle(1) );
-  $('.js-question3').find('.question-title').text( displayQuestionTitle(2) );
-  $('.js-question4').find('.question-title').text( displayQuestionTitle(3) );
-  $('.js-question5').find('.question-title').text( displayQuestionTitle(4) );
+
+  /*
+    Show question titles
+  */
+  $('.js-question1 .question-title').text( quizApp.displayQuestionTitle(0) );
+  $('.js-question2 .question-title').text( quizApp.displayQuestionTitle(1) );
+  $('.js-question3 .question-title').text( quizApp.displayQuestionTitle(2) );
+  $('.js-question4 .question-title').text( quizApp.displayQuestionTitle(3) );
+  $('.js-question5 .question-title').text( quizApp.displayQuestionTitle(4) );
+
+
+  /*
+    Update Score Total
+  */
+  score = quizApp.scoreCalculator() + '%';
+  $('.js-store').text( score );
 
 });
